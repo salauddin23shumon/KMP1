@@ -1,4 +1,4 @@
-package asa.org.bd.kmp1
+package org.s1s.project
 
 interface Platform {
     val name: String

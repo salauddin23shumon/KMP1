@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlin.serialization)
+	alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -34,13 +34,14 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-
+            implementation(libs.androidx.material3)
             implementation(libs.ktor.client.okhttp)
         }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -55,6 +56,7 @@ kotlin {
 
             implementation(libs.kotlinx.datetime)
         }
+
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }
@@ -62,11 +64,11 @@ kotlin {
 }
 
 android {
-    namespace = "asa.org.bd.kmp1"
+    namespace = "org.s1s.project"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "asa.org.bd.kmp1"
+        applicationId = "org.s1s.project"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -89,6 +91,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.material3)
     debugImplementation(compose.uiTooling)
 }
 
