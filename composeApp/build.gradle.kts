@@ -8,6 +8,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
 	alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.room)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -36,6 +38,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.material3)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
         }
 
         commonMain.dependencies {
@@ -47,6 +51,16 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite.bundled)
+
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+
+            implementation(libs.lifecycle.viewmodel)
+            implementation(libs.navigation.compose)
 
             implementation(libs.bundles.ktor)
 
@@ -90,7 +104,15 @@ android {
     }
 }
 
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
 dependencies {
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
     implementation(libs.androidx.material3)
     debugImplementation(compose.uiTooling)
 }
