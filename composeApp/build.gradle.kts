@@ -36,7 +36,6 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.androidx.material3)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
@@ -49,8 +48,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtime.compose)
+
 
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
@@ -59,8 +57,19 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
 
+            // KMP-compatible Lifecycle (ViewModel, Runtime, SavedState)
             implementation(libs.lifecycle.viewmodel)
-            implementation(libs.navigation.compose)
+            implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.lifecycle.runtime.compose)
+            implementation(libs.lifecycle.viewmodel.savedstate)
+
+            //nav3
+            implementation(libs.androidx.navigation3.runtime)
+            implementation(libs.androidx.navigation3.ui)
+
+            //extra
+//            implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+//            implementation(libs.androidx.material3.adaptive.navigation3)
 
             implementation(libs.bundles.ktor)
 
@@ -69,6 +78,9 @@ kotlin {
             implementation(libs.atomicfu)
 
             implementation(libs.kotlinx.datetime)
+
+            implementation(libs.kotlinx.serialization.core)
+            implementation(libs.kotlinx.serialization.json)
         }
 
         nativeMain.dependencies {
@@ -109,11 +121,13 @@ room {
 }
 
 dependencies {
+
+
+
     add("kspAndroid", libs.room.compiler)
     add("kspIosX64", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
-    implementation(libs.androidx.material3)
     debugImplementation(compose.uiTooling)
 }
 
