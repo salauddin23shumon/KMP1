@@ -1,35 +1,67 @@
 package org.s1s.project
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
-
-import kmp1.composeapp.generated.resources.Res
-import kmp1.composeapp.generated.resources.compose_multiplatform
-import materialTheme.AppTheme
+import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.entry
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.ui.NavDisplay
+import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
+import org.s1s.project.presentation.navigation.Home
+import org.s1s.project.presentation.navigation.Login
+import org.s1s.project.presentation.navigation.NavigationManager
+import org.s1s.project.presentation.navigation.drawerItems
+import org.s1s.project.presentation.navigation.materialTheme.AppTheme
+import org.s1s.project.presentation.ui.ScreenWrapper
+import org.s1s.project.presentation.ui.home.HomeScreen
+import org.s1s.project.presentation.ui.login.LoginScreen
 
 @Composable
-@Preview
 fun App() {
     AppTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+        val navigationManager: NavigationManager = koinInject()
+        val backStack = navigationManager.backStack
+        val drawerState = rememberDrawerState(DrawerValue.Closed)
+        val scope = rememberCoroutineScope()
+
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            drawerContent = {
+                ModalDrawerSheet {
+                    Text("Menu", modifier = Modifier.padding(16.dp))
+                    drawerItems.filter { it.key != Login }.forEach { item ->
+                        NavigationDrawerItem(
+                            label = { Text(item.label) },
+                            selected = backStack.lastOrNull() == item.key,
+                            onClick = {
+                                scope.launch { drawerState.close() }
+                                when (item.key) {
+                                    Home -> navigationManager.navigateToHome()
+                                    Login -> navigationManager.navigateToLogin()
+                                }
+                            }
+                        )
+                    }
                 }
+            }
+        ) {
+            ScreenWrapper(
+                currentKey = backStack.lastOrNull(),
+                onHamburgerClick = { scope.launch { drawerState.open() } }
+            ) {
+                NavDisplay(
+                    backStack = backStack,
+                    entryProvider = entryProvider {
+                        {
+                            entry<Login> { LoginScreen(navigationManager) }
+                            entry<Home> { HomeScreen { scope.launch { drawerState.open() } } }
+                        }
+                    }
+                )
             }
         }
     }

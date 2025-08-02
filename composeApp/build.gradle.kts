@@ -45,6 +45,7 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
+            implementation(compose.materialIconsExtended) //new
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 			implementation(libs.lifecycle.viewmodel)
@@ -54,9 +55,11 @@ kotlin {
 			implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
 
-            api(libs.koin.core)
+            implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.ksp.compiler)
+            api(libs.koin.annotations)
 
             // KMP-compatible Lifecycle (ViewModel, Runtime, SavedState)
             implementation(libs.lifecycle.viewmodel.compose)
@@ -65,6 +68,7 @@ kotlin {
             //nav3
             implementation(libs.androidx.navigation3.runtime)
             implementation(libs.androidx.navigation3.ui)
+            implementation(libs.androidx.navigationevent)
 
             //extra
 //            implementation(libs.androidx.lifecycle.viewmodel.navigation3)
@@ -124,8 +128,6 @@ room {
 }
 
 dependencies {
-
-
 
     add("kspAndroid", libs.room.compiler)
     add("kspIosX64", libs.room.compiler)
