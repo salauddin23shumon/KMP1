@@ -8,17 +8,26 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation3.runtime.rememberNavBackStack
 
 
+// --- Navigation Sealed Class ---
 @Serializable
-data object Login : NavKey
+sealed class Screen : NavKey {
+    @Serializable
+    data object Login : Screen()
 
-@Serializable
-data object Home : NavKey
+    @Serializable
+    data object Home : Screen()
+    // Add other screens here if needed
+}
 
+// --- Drawer Item Data Class ---
 data class DrawerItem(val key: NavKey, val label: String)
 
+// --- Drawer Items List ---
+// It's good practice to define this at a readable scope,
+// potentially outside the Composable if it's static.
 val drawerItems = listOf(
-    DrawerItem(Home, "Home"),
-    DrawerItem(Login, "Login")
+    DrawerItem(Screen.Home, "Home"),
+    // DrawerItem(Screen.Login, "Login") // Usually, Login is not in the main drawer once logged in
 )
 
 /**
@@ -28,7 +37,7 @@ val drawerItems = listOf(
  * @return A SnapshotStateList representing the navigation backstack.
  */
 @Composable
-fun rememberAppNavigationState(initialScreen: NavKey = Login): SnapshotStateList<NavKey> {
+fun rememberAppNavigationState(initialScreen: NavKey = Screen.Login): SnapshotStateList<NavKey> {
     // We specify NavKey as the type for the backstack for better type safety.
     return rememberNavBackStack(initialScreen)
 }

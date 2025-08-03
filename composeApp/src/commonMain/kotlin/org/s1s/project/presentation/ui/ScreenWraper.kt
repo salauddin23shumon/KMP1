@@ -1,6 +1,6 @@
 package org.s1s.project.presentation.ui
 
-import org.s1s.project.presentation.navigation.Login
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,16 +12,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.NavKey
+import org.s1s.project.presentation.navigation.Screen
 
 
 @Composable
 fun ScreenWrapper(
-    currentKey: Any?,
+    currentKey: NavKey?,
     onHamburgerClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-        if (currentKey != Login) {
+        if (currentKey != Screen.Login) {
             IconButton(
                 onClick = onHamburgerClick,
                 modifier = Modifier
