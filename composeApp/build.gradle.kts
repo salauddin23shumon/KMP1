@@ -51,7 +51,9 @@ kotlin {
 			implementation(libs.lifecycle.viewmodel)
             implementation(libs.lifecycle.runtimeCompose)
 
-			
+            implementation(libs.navigation.common)
+            implementation(libs.navigation.compose)
+
 			implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
 
@@ -66,9 +68,9 @@ kotlin {
             implementation(libs.lifecycle.viewmodel.savedstate)
 
             //nav3
-            implementation(libs.androidx.navigation3.runtime)
-            implementation(libs.androidx.navigation3.ui)
-            implementation(libs.androidx.navigationevent)
+//            implementation(libs.androidx.navigation3.runtime)
+//            implementation(libs.androidx.navigation3.ui)
+//            implementation(libs.androidx.navigationevent)
 
             //extra
 //            implementation(libs.androidx.lifecycle.viewmodel.navigation3)

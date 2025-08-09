@@ -7,10 +7,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import org.s1s.project.presentation.navigation.NavigationManager
 import org.s1s.project.utility.AppState
 
-class HomeViewModel(private val navigationManager: NavigationManager) : ViewModel(), KoinComponent {
+class HomeViewModel() : ViewModel(), KoinComponent {
     // Inject Ktor client or Room repository via Koin
     // private val repository: YourRepository by inject()
 
