@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import org.s1s.project.utility.AppState
 
 class HomeViewModel() : ViewModel(), KoinComponent {
-    // Inject Ktor client or Room repository via Koin
-    // private val repository: YourRepository by inject()
-
 
     private val _homeState = MutableStateFlow<AppState<String>>(AppState.Idle)
     val homeState: StateFlow<AppState<String>> = _homeState.asStateFlow()
 
+    init {
+        fetchData()
+    }
     fun fetchData() {
         _homeState.value = AppState.Loading
         viewModelScope.launch {

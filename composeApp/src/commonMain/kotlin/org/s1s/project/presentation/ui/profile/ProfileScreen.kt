@@ -1,16 +1,32 @@
 package org.s1s.project.presentation.ui.profile
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import org.koin.compose.viewmodel.koinViewModel
 import org.s1s.project.presentation.viewModels.HomeViewModel
 import org.s1s.project.utility.AppState
+import org.s1s.project.utility.AppState.Success
 
 @Composable
 fun ProfileScreen(viewModel: HomeViewModel = koinViewModel()) {
-    val state = viewModel.homeState.collectAsState()
-    when (state) {
-        is AppState.Success<*> -> ProfileUi(data = "Profile Page")
-        else -> Unit
+    val state = viewModel.homeState.collectAsState() // Use 'by' delegate for cleaner access
+
+
+    when (state.value) {
+        is Success<*> -> { // Assuming Success is nested in HomeState
+            // Make sure the data passed is what ProfileUi expects
+            ProfileUi(data = (state.value as Success<Any?>).data as String) // Adjust data access as needed
+        }
+        is AppState.Loading -> {
+            Text("Loading profile...") // Handle loading state
+        }
+        is AppState.Error -> {
+            Text("Error: ${(state as AppState.Error)}") // Handle error state
+        }
+        else -> {
+            Text("Profile not available (Unhandled state: $state)")
+        }
     }
 }

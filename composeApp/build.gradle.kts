@@ -53,6 +53,7 @@ kotlin {
 
             implementation(libs.navigation.common)
             implementation(libs.navigation.compose)
+            implementation(libs.ui.backhandler)
 
 			implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)

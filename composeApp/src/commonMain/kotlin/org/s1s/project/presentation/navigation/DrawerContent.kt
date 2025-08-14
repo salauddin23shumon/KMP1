@@ -1,20 +1,17 @@
 package org.s1s.project.presentation.navigation
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 
-@Composable
+/*@Composable
 fun DrawerNavigation(
     navController: NavHostController, // Use the top-level appNavController
     onItemClicked: () -> Unit // Lambda to close the drawer
@@ -57,4 +54,37 @@ fun DrawerItem(
             }
             .padding(16.dp)
     )
+}*/
+
+@Composable
+fun DrawerContent(onDestinationClick: (String) -> Unit) {
+    ModalDrawerSheet {
+        Spacer(Modifier.height(24.dp))
+        NavigationDrawerItem(
+            label = { Text("Landing") },
+            selected = false,
+            onClick = { onDestinationClick(Screen.Landing.route) },
+            modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+        )
+        NavigationDrawerItem(
+            label = { Text("Profile") },
+            selected = false,
+            onClick = { onDestinationClick(Screen.Profile.route) },
+            modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+        )
+        NavigationDrawerItem(
+            label = { Text("Products") },
+            selected = false,
+            onClick = { onDestinationClick(Screen.ProductList.route) },
+            modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+        )
+        NavigationDrawerItem(
+            label = { Text("Settings") },
+            selected = false,
+            onClick = { onDestinationClick(Screen.Settings.route) },
+            modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+        )
+    }
 }
+
+

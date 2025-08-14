@@ -4,6 +4,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import io.ktor.websocket.Frame
 import org.koin.compose.viewmodel.koinViewModel
@@ -14,7 +15,7 @@ import org.s1s.project.utility.AppState
 @Composable
 fun ProductListScreen(
     viewModel: ProductViewModel = koinViewModel(),
-    navController: NavHostController
+    navController: NavController
 ) {
     val state = viewModel.productListState.collectAsState()
     LaunchedEffect(Unit) {
