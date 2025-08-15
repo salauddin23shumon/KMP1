@@ -1,4 +1,4 @@
-package org.s1s.project.presentation.navigation.materialTheme
+package org.s1s.project.presentation.materialTheme
 
 import androidx.compose.ui.graphics.Color
 
@@ -25,3 +25,7 @@ val inversePrimary = Color(0xFFBB86FC)
 val surfaceTint = Color(0xFF6200EE)
 val outlineVariant = Color(0xFFB0B0B0)
 val scrim = Color(0xFF000000)
+
+val DarkPrimary = Color(0xFFBB86FC)
+val DarkSecondary = Color(0xFF03DAC6)
+val DarkTertiary = Color(0xFF3700B3)

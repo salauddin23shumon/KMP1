@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import org.s1s.project.presentation.navigation.Screen
-import org.s1s.project.presentation.navigation.materialTheme.background
 
 @Composable
 fun SplashScreen(navController: NavController) {

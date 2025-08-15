@@ -1,4 +1,4 @@
-package org.s1s.project.presentation.navigation.materialTheme
+package org.s1s.project.presentation.materialTheme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
