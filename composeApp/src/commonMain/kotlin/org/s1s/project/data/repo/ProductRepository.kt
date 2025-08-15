@@ -8,12 +8,12 @@ interface ProductRepository {
 }
 
 class ProductRepositoryImpl : ProductRepository {
+
     override suspend fun getProducts(): Result<List<Product>> {
         return Result.success(
-            listOf(
-                Product("1", "Product 1", "Description 1"),
-                Product("2", "Product 2", "Description 2")
-            )
+            List(10) { id ->
+                    Product(id.toString(), "Product $id", "Description $id")
+            }
         )
     }
 

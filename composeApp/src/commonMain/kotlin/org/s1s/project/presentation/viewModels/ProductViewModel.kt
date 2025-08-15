@@ -11,6 +11,7 @@ import org.s1s.project.domain.usecase.ProductUseCase
 import org.s1s.project.utility.AppState
 
 class ProductViewModel(private val productUseCase: ProductUseCase) : ViewModel() {
+
     private val _productListState = MutableStateFlow<AppState<List<ProductDomain>>>(AppState.Idle)
     val productListState: StateFlow<AppState<List<ProductDomain>>> = _productListState.asStateFlow()
 
