@@ -4,6 +4,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import io.github.aakira.napier.Napier
 import org.koin.compose.viewmodel.koinViewModel
 import org.s1s.project.presentation.viewModels.HomeViewModel
 import org.s1s.project.utility.AppState
@@ -15,9 +16,9 @@ fun ProfileScreen(viewModel: HomeViewModel = koinViewModel()) {
 
 
     when (state.value) {
-        is Success<*> -> { // Assuming Success is nested in HomeState
-            // Make sure the data passed is what ProfileUi expects
-            ProfileUi(data = (state.value as Success<Any?>).data as String) // Adjust data access as needed
+        is Success<*> -> {
+            Napier.i("Success")
+            ProfileUi(data = (state.value as Success<Any?>).data as String)
         }
         is AppState.Loading -> {
             Text("Loading profile...") // Handle loading state

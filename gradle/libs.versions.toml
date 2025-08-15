@@ -23,8 +23,6 @@ datastore = "1.1.7"
 navigationCommon = "2.9.0-beta04"
 uiBackhandler = "1.9.0-beta01"
 
-atomicfu = "0.29.0"
-
 koin = "4.1.0"
 koin-annotations = "2.1.0"
 koinComposeMultiplatform = "4.1.0"
@@ -37,9 +35,13 @@ sqlite = "2.5.2"
 kotlinxSerializationCore = "1.9.0"
 kotlinxSerialization = "2.2.0"
 
+napier = "2.7.1"
+atomicfu = "0.29.0"
+
 androidx-testExt = "1.2.1"
 junit = "4.13.2"
 androidx-espresso = "3.6.1"
+
 
 
 
@@ -102,12 +104,16 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 #thread safe operation
 atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version.ref = "atomicfu" }
 
+# logging
+napier = { group = "io.github.aakira", name = "napier", version.ref = "napier" }
+
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }
 androidx-testExt-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-testExt" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-espresso" }
+
 
 
 

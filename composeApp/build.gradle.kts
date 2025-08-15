@@ -83,6 +83,8 @@ kotlin {
 
             implementation(libs.atomicfu)
 
+            implementation(libs.napier)
+
             implementation(libs.kotlinx.datetime)
 
             implementation(libs.kotlinx.serialization.core)
