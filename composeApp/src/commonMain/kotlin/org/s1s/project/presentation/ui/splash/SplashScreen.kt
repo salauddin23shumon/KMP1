@@ -19,8 +19,8 @@ fun SplashScreen(navController: NavController) {
     LaunchedEffect(Unit) {
         // Fake loading delay
         kotlinx.coroutines.delay(1500)
-        navController.navigate(Screen.Login.route) {
-            popUpTo(Screen.Splash.route) { inclusive = true }
+        navController.navigate(Screen.Login) {
+            popUpTo(Screen.Splash) { inclusive = true }
         }
     }
     Column(modifier = Modifier

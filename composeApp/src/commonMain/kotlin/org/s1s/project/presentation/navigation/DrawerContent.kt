@@ -11,77 +11,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-/*@Composable
-fun DrawerNavigation(
-    navController: NavHostController, // Use the top-level appNavController
-    onItemClicked: () -> Unit // Lambda to close the drawer
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxHeight()
-            .width(250.dp)
-            .background(MaterialTheme.colorScheme.background)
-            .padding(16.dp)
-    ) {
-        DrawerItem("Profile", Screen.Profile.route, navController, onItemClicked)
-        DrawerItem("Landing", Screen.Landing.route, navController, onItemClicked)
-        DrawerItem("Settings", Screen.Settings.route, navController, onItemClicked)
-        DrawerItem("Product List", Screen.ProductList.route, navController, onItemClicked)
-    }
-}
 
 @Composable
-fun DrawerItem(
-    label: String,
-    route: String,
-    navController: NavHostController, // Use the top-level appNavController
-    onItemClicked: () -> Unit
-) {
-    Text(
-        text = label,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable {
-                navController.navigate(route) {
-                    // Pop up to the Home route to keep the Home section as the root of this navigation
-                    popUpTo(Screen.Home.route) {
-                        saveState = true // Preserve state of screens popped off
-                    }
-                    launchSingleTop = true // Avoid multiple copies of the same screen
-                    restoreState = true // Restore state when navigating back
-                }
-                onItemClicked() // Close the drawer
-            }
-            .padding(16.dp)
-    )
-}*/
-
-@Composable
-fun DrawerContent(onDestinationClick: (String) -> Unit) {
+fun DrawerContent(onDestinationClick: (Screen) -> Unit) {
     ModalDrawerSheet {
         Spacer(Modifier.height(24.dp))
         NavigationDrawerItem(
             label = { Text("Landing") },
             selected = false,
-            onClick = { onDestinationClick(Screen.Landing.route) },
+            onClick = { onDestinationClick(Screen.HomeScreens.Landing) },
             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
         )
         NavigationDrawerItem(
             label = { Text("Profile") },
             selected = false,
-            onClick = { onDestinationClick(Screen.Profile.route) },
+            onClick = { onDestinationClick(Screen.HomeScreens.Profile) },
             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
         )
         NavigationDrawerItem(
             label = { Text("Products") },
             selected = false,
-            onClick = { onDestinationClick(Screen.ProductList.route) },
+            onClick = { onDestinationClick(Screen.HomeScreens.ProductList) },
             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
         )
         NavigationDrawerItem(
             label = { Text("Settings") },
             selected = false,
-            onClick = { onDestinationClick(Screen.Settings.route) },
+            onClick = { onDestinationClick(Screen.HomeScreens.Settings) },
             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
         )
     }

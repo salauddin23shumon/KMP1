@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerValue
@@ -28,21 +29,20 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
-
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.toRoute
 import kotlinx.coroutines.launch
 import org.s1s.project.presentation.navigation.DrawerContent
-import org.s1s.project.presentation.navigation.Graph
+import org.s1s.project.presentation.navigation.GraphRoute
 import org.s1s.project.presentation.navigation.Screen
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -54,8 +54,21 @@ fun HomeScaffold(
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-    val onLanding = currentRoute == Screen.Landing.route
+    // Get the current destination's route string
+    val currentNavBackStackEntry = navController.currentBackStackEntryAsState().value
+    val currentRouteString = currentNavBackStackEntry?.destination?.route
+
+    // Check if the current route string matches the route for Landing.
+    // You'll need to know how Screen.HomeScreens.Landing is serialized to a route string.
+    // By default, for an object, it's its fully qualified name.
+    // Or, if you've defined custom routes, use that.
+
+    // Assuming default serialization for objects:
+    val landingRouteString = Screen.HomeScreens.Landing::class.qualifiedName
+    // Or if you have a helper to get the route for a KClass/object:
+    // val landingRouteString = navController.graph.findNode(Screen.HomeScreens.Landing)?.route
+
+    val onLanding = currentRouteString == landingRouteString
 
     // Only intercept when we have something special to do
     val interceptBack = drawerState.isOpen || !onLanding
@@ -64,15 +77,15 @@ fun HomeScaffold(
         when {
             drawerState.isOpen -> scope.launch { drawerState.close() }
             !onLanding -> {
-                navController.navigate(Screen.Landing.route) {
-                    // Keep home graph alive, restore peer state
-                    popUpTo(Graph.HOME) { saveState = true }
+                navController.navigate(Screen.HomeScreens.Landing) { // Navigate with the object
+                    popUpTo(GraphRoute.Home::class) {
+                        saveState = true
+                    } // Or your graph route object/string
                     launchSingleTop = true
                     restoreState = true
                 }
             }
         }
-        // If onLanding and drawer closed, BackHandler is disabled, so system back exits.
     }
 
     ModalNavigationDrawer(
@@ -82,7 +95,7 @@ fun HomeScaffold(
                 onDestinationClick = { route ->
                     scope.launch { drawerState.close() }
                     navController.navigate(route) {
-                        popUpTo(Graph.HOME) { saveState = true }
+                        popUpTo(GraphRoute.Home::class) { saveState = true }
                         launchSingleTop = true
                         restoreState = true
                     }
@@ -110,12 +123,8 @@ fun HomeScaffold(
 }
 
 
-
-
-
-
 @Composable
-private fun TransparentOverlayAppBar(
+fun TransparentOverlayAppBar(
     showHamburger: Boolean = true,
     onHamburgerClick: () -> Unit,
     onBackClick: () -> Unit,
@@ -138,7 +147,7 @@ private fun TransparentOverlayAppBar(
         ) {
             // Left icon (hamburger or back) with a subtle circular scrim so it's always visible
             ScrimmedIconButton(
-                imageVector = if (showHamburger) Icons.Filled.Menu else Icons.Filled.ArrowBack,
+                imageVector = if (showHamburger) Icons.Filled.Menu else Icons.AutoMirrored.Filled.ArrowBack,
                 contentDesc = if (showHamburger) "Menu" else "Back",
                 onClick = if (showHamburger) onHamburgerClick else onBackClick
             )

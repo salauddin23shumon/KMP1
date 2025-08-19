@@ -27,8 +27,8 @@ fun LoginScreen(
     LaunchedEffect(state) {
         when (state) {
             is AppState.Success -> {
-                navController.navigate(Screen.Landing.route) {
-                    popUpTo(Screen.Login.route) { inclusive = true }
+                navController.navigate(Screen.HomeScreens.Landing) {
+                    popUpTo(Screen.Login) { inclusive = true }
                     launchSingleTop = true
                 }
             }

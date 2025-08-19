@@ -14,11 +14,11 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Splash.route
+        startDestination = Screen.Splash
     ) {
         // Root screens (no appbar/drawer)
-        composable(Screen.Splash.route) { SplashScreen(navController) }
-        composable(Screen.Login.route) { LoginScreen(navController= navController) }
+        composable<Screen.Splash> { SplashScreen(navController) }
+        composable<Screen.Login> { LoginScreen(navController= navController) }
 //        composable(Screen.Signup.route) { SignupScreen(navController) }
 
 
