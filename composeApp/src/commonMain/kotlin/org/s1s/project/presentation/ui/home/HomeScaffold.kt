@@ -49,6 +49,7 @@ import org.s1s.project.presentation.navigation.Screen
 @Composable
 fun HomeScaffold(
     navController: NavController,
+    isTopLevelHomeScreen: Boolean,
     content: @Composable () -> Unit
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -57,36 +58,27 @@ fun HomeScaffold(
     // Get the current destination's route string
     val currentNavBackStackEntry = navController.currentBackStackEntryAsState().value
     val currentRouteString = currentNavBackStackEntry?.destination?.route
-
-    // Check if the current route string matches the route for Landing.
-    // You'll need to know how Screen.HomeScreens.Landing is serialized to a route string.
-    // By default, for an object, it's its fully qualified name.
-    // Or, if you've defined custom routes, use that.
-
-    // Assuming default serialization for objects:
-    val landingRouteString = Screen.HomeScreens.Landing::class.qualifiedName
-    // Or if you have a helper to get the route for a KClass/object:
-    // val landingRouteString = navController.graph.findNode(Screen.HomeScreens.Landing)?.route
-
+    val landingRouteString = Screen.HomeScreens.Landing::class.qualifiedName // Or your method
     val onLanding = currentRouteString == landingRouteString
 
+
     // Only intercept when we have something special to do
-    val interceptBack = drawerState.isOpen || !onLanding
+    val interceptBack = drawerState.isOpen || (isTopLevelHomeScreen && !onLanding)
+
 
     BackHandler(enabled = interceptBack) {
         when {
             drawerState.isOpen -> scope.launch { drawerState.close() }
-            !onLanding -> {
-                navController.navigate(Screen.HomeScreens.Landing) { // Navigate with the object
-                    popUpTo(GraphRoute.Home::class) {
-                        saveState = true
-                    } // Or your graph route object/string
+            isTopLevelHomeScreen && !onLanding -> { // Only do this if it's a top-level screen
+                navController.navigate(Screen.HomeScreens.Landing) {
+                    popUpTo(GraphRoute.Home::class) { saveState = true }
                     launchSingleTop = true
                     restoreState = true
                 }
             }
         }
     }
+
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -112,7 +104,7 @@ fun HomeScaffold(
 
                 // Transparent overlay appbar with a visible hamburger
                 TransparentOverlayAppBar(
-                    showHamburger = true,
+                    showHamburger = isTopLevelHomeScreen,
                     onHamburgerClick = { scope.launch { drawerState.open() } },
                     onBackClick = { navController.popBackStack() }, // if you want back on details
                     title = null

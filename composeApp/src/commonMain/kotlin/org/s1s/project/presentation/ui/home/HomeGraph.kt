@@ -14,19 +14,18 @@ import org.s1s.project.presentation.ui.profile.ProfileScreen
 
 
 fun NavGraphBuilder.homeGraph(navController: NavController) {
+    // NavGraphBuilder
     navigation<GraphRoute.Home>(
-//        route = HomeGraphRoute.route,
         startDestination = Screen.HomeScreens.Landing
     ) {
-        // Drawer peers (all wrapped by HomeScaffold)
         composable<Screen.HomeScreens.Landing> {
-            HomeScaffold(navController) { LandingScreen() }
+            HomeScaffold(navController, isTopLevelHomeScreen = true) { LandingScreen() }
         }
         composable<Screen.HomeScreens.Profile> {
-            HomeScaffold(navController) { ProfileScreen() }
+            HomeScaffold(navController, isTopLevelHomeScreen = true) { ProfileScreen() }
         }
         composable<Screen.HomeScreens.ProductList> {
-            HomeScaffold(navController) {
+            HomeScaffold(navController, isTopLevelHomeScreen = true) {
                 ProductListScreen(
                     navController = navController,
                     onProductClick = { productId ->
@@ -35,14 +34,12 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
                 )
             }
         }
-//        composable<Screen.HomeScreens.Settings> {
-//            HomeScaffold(navController) { SettingsScreen() }
-//        }
-        // Product Details now uses the type-safe class
         composable<Screen.HomeScreens.ProductDetails> { backStackEntry ->
-            // Retrieve the type-safe object from the back stack entry
             val productDetails: Screen.HomeScreens.ProductDetails = backStackEntry.toRoute()
-            HomeScaffold(navController) { ProductDetailsScreen(productDetails.id) }
+            // ProductDetails is NOT a top-level home screen in this context
+            HomeScaffold(navController, isTopLevelHomeScreen = false) {
+                ProductDetailsScreen(productDetails.id)
+            }
         }
     }
 }
